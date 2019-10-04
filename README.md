@@ -37,7 +37,7 @@ Für das Device muss erfasst werden
 Es ist ein Progamm zu entwicklen, das die Erfassung von Daten für spätere Zugriff dient.
 Programm öffnen und Stamdaten eingeben , speichern .
 # Plannung / "Soll Analyse"
-
+Zur Umsetzung ist ein Programm 
 
 # Umsetzungideen/Gedanken
 *Definition, welche Daten für das Device erfasst werden sollen (Liste) - mit den entsprechenden Datentypen (vor allem, ob es weitere Objekte oder komplexe Datentypen sind)*
