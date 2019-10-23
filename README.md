@@ -37,9 +37,13 @@ Für das Device muss erfasst werden
 Es ist ein Progamm zu entwicklen, das die Erfassung von Daten für spätere Zugriff dient.
 Programm öffnen und Stamdaten eingeben , speichern .
 # Plannung / "Soll Analyse"
-Zur Umsetzung ist ein Programm 
+- Zur Umsetzung soll ein Programm entwickelt werden, das das Dokumentieren und Erfassen von Elemente seine haupt Aufgabe wird.
+- Außerdem sind die Zugriffe auf diese Daten personanhängig, also jeder Benutzer hat einen Profile und kann auf die Daten zugreifen.
+- Sei es einen PC oder einen Drucker, will ich deren Stammdaten speichern.
+
 
 # Umsetzungideen/Gedanken
 *Definition, welche Daten für das Device erfasst werden sollen (Liste) - mit den entsprechenden Datentypen (vor allem, ob es weitere Objekte oder komplexe Datentypen sind)*
-
-
+1. Die Daten müssen irgendwo gespeichert, meine Idee wäre diese in relationalen Tabellen zu speichern und die Struktur und die Beziehungen dort aufbauen.
+2. Die Tabellen werden mihilfe das Datenbankmangmentsystem Access oder LibreOffice erstellt
+3. 
