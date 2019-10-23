@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 
 namespace Test_CMDB
 {
@@ -74,9 +75,12 @@ namespace Test_CMDB
 
 
             var tes = from pc in pcs where pc.FormFactor == "Notebook" select pc;
-
-
-
+            ;
+            foreach (var details in tes)
+            {
+                var hostname = details.HostName.ToString();
+                System.Console.WriteLine(hostname+" ist ein Notebook");
+            }
             foreach (PC test in pcs)
             {
                 if (test.FormFactor.ToString() == "Notebook")

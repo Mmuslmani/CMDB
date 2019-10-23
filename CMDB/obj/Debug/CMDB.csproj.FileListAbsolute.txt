@@ -1,0 +1,6 @@
+C:\Users\mmuslmani\source\repos\CMDB\CMDB\bin\Debug\CMDB.exe.config
+C:\Users\mmuslmani\source\repos\CMDB\CMDB\bin\Debug\CMDB.exe
+C:\Users\mmuslmani\source\repos\CMDB\CMDB\bin\Debug\CMDB.pdb
+C:\Users\mmuslmani\source\repos\CMDB\CMDB\obj\Debug\CMDB.csprojAssemblyReference.cache
+C:\Users\mmuslmani\source\repos\CMDB\CMDB\obj\Debug\CMDB.exe
+C:\Users\mmuslmani\source\repos\CMDB\CMDB\obj\Debug\CMDB.pdb
