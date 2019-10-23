@@ -44,6 +44,6 @@ Programm öffnen und Stamdaten eingeben , speichern .
 
 # Umsetzungideen/Gedanken
 *Definition, welche Daten für das Device erfasst werden sollen (Liste) - mit den entsprechenden Datentypen (vor allem, ob es weitere Objekte oder komplexe Datentypen sind)*
-1. Die Daten müssen irgendwo gespeichert, meine Idee wäre diese in reltionalen Tabellen zu speichern und die Struktur und die Beziehungen dort aufbauen.
+1. Die Daten müssen irgendwo gespeichert, meine Idee wäre diese in relationalen Tabellen zu speichern und die Struktur und die Beziehungen dort aufbauen.
 2. Die Tabellen werden mihilfe das Datenbankmangmentsystem Access oder LibreOffice erstellt
 3. 
