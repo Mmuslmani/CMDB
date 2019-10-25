@@ -61,6 +61,55 @@ namespace Test_CMDB
     {
         static void Main(string[] args)
         {
+            SqlConnectingStringBuilder builder = new SqlConnectingStringBuilder();
+            string connetingString = GetConnectionString();
+            SqlConnection conn = new SqlConnection(connetingString);
+            Console.WriteLine("1. State: {0}", conn.State);
+
+
+            if (conn != null)
+            {
+                Console.WriteLine($"Das Objekt ({conn}) ist mit dem Server verbunden");
+            }
+            else 
+            {
+                Console.WriteLine($"Das Objekt {conn} ist nicht mit dem Server verbunden ");
+                System.Console.ReadKey();
+                return;
+
+            }
+            Console.WriteLine("Versuche Datenbank zu öffnen ...");
+            conn.Open();
+            Console.WriteLine("2. State: {0}", conn.State);
+            
+                       
+            string query = @"
+SELECT 
+	* 
+FROM PC
+JOIN RAM ON PC.id = RAM.pc_id
+
+WHERE pc.name like 'valencia'
+
+";
+
+
+            
+            SqlCommand command = new SqlCommand(query,conn);
+            SqlDataReader reader = command.ExecuteReader();
+            {
+                while (reader.Read())
+                {
+                    Object[] columnas = new Object[reader.FieldCount];
+                    reader.GetValues(columnas);
+                    foreach (var atributo in columnas) 
+                    {
+                        Console.Write("{0} ", atributo);
+                    }
+                }
+            }
+            
+            
             List<PC> pcs = new List<PC>() { };
             PC valencia = new PC(1, "valencia", "fujitsu", "valancia", "Miditower");
             pcs.Add(valencia);
@@ -101,11 +150,10 @@ namespace Test_CMDB
 
         }
 
-        private static void GetAttribut()
+        private static string GetConnectionString()
         {
-
+            return "server=VALENCIA\\SQLEXPRESS;Database=CMDB; Integrated Security=true;";
         }
-
     }
 
 }
