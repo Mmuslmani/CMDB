@@ -123,16 +123,14 @@ WHERE pc.name like 'valencia'
             valencia.AddCpu(i7);
             aquarius.AddCpu(i5);
             talos.AddCpu(i3);
-
+            
             talos.AddCpu(new CPU(3, "Core i3-2300", "Intel"));
-
 
             var tes = from pc in pcs where pc.FormFactor == "Notebook" select pc;
             ;
             foreach (var details in tes)
             {
-                var hostname = details.HostName.ToString();
-                System.Console.WriteLine(hostname+" ist ein Notebook");
+                var hostname = details.Id.ToString();
             }
             foreach (PC test in pcs)
             {
