@@ -61,7 +61,7 @@ namespace Test_CMDB
     {
         static void Main(string[] args)
         {
-            SqlConnectingStringBuilder builder = new SqlConnectingStringBuilder();
+           
             string connetingString = GetConnectionString();
             SqlConnection conn = new SqlConnection(connetingString);
             Console.WriteLine("1. State: {0}", conn.State);
