@@ -89,13 +89,19 @@ SELECT
 FROM PC
 JOIN RAM ON PC.id = RAM.pc_id
 
-WHERE pc.name like 'valencia'
+WHERE pc.hostname like 'MAC'
 
 ";
-
-
-            
+            string insert = @"
+SET IDENTITY_INSERT PC on;
+INSERT INTO PC ( name,hostname)
+     VALUES(@ID, 'MMS')
+";
+               
             SqlCommand command = new SqlCommand(query,conn);
+            
+           // command.Connection = conn;
+           // command.CommandText = insert;
             SqlDataReader reader = command.ExecuteReader();
             {
                 while (reader.Read())
@@ -104,11 +110,11 @@ WHERE pc.name like 'valencia'
                     reader.GetValues(columnas);
                     foreach (var atributo in columnas) 
                     {
-                        Console.Write("{0} ", atributo);
+                        Console.Write("{0}", atributo);
                     }
+                   
                 }
-            }
-            
+            }           
             
             List<PC> pcs = new List<PC>() { };
             PC valencia = new PC(1, "valencia", "fujitsu", "valancia", "Miditower");
@@ -147,10 +153,14 @@ WHERE pc.name like 'valencia'
             System.Console.ReadKey();
 
         }
-
+    
         private static string GetConnectionString()
         {
             return "server=VALENCIA\\SQLEXPRESS;Database=CMDB; Integrated Security=true;";
+        }
+        private void GetData() 
+        {
+            Console.WriteLine("Holle die Daten ");
         }
     }
 
