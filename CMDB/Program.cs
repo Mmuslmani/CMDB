@@ -8,7 +8,7 @@ using System;
 
 namespace Test_CMDB
 {
-    public class PC
+    class PC
     {
         public string Name { get; set; }
         public int Id { get; set; }
@@ -61,7 +61,7 @@ namespace Test_CMDB
     {
         static void Main(string[] args)
         {
-           
+
             string connetingString = GetConnectionString();
             SqlConnection conn = new SqlConnection(connetingString);
             Console.WriteLine("1. State: {0}", conn.State);
@@ -71,51 +71,53 @@ namespace Test_CMDB
             {
                 Console.WriteLine($"Das Objekt ({conn}) ist mit dem Server verbunden");
             }
-            else 
+            else
             {
                 Console.WriteLine($"Das Objekt {conn} ist nicht mit dem Server verbunden ");
-                System.Console.ReadKey();
+                Console.ReadKey();
                 return;
 
             }
             Console.WriteLine("Versuche Datenbank zu öffnen ...");
             conn.Open();
             Console.WriteLine("2. State: {0}", conn.State);
-            
-                       
+
+
             string query = @"
-SELECT 
-	* 
-FROM PC
+SELECT * FROM PC
 JOIN RAM ON PC.id = RAM.pc_id
-
 WHERE pc.hostname like 'MAC'
-
 ";
             string insert = @"
 SET IDENTITY_INSERT PC on;
 INSERT INTO PC ( name,hostname)
      VALUES(@ID, 'MMS')
 ";
-               
-            SqlCommand command = new SqlCommand(query,conn);
-            
-           // command.Connection = conn;
-           // command.CommandText = insert;
+
+            SqlCommand command = new SqlCommand(query, conn);
+            //conn.Open();
+            // command.Connection = conn;
+            //command.CommandText = insert;
             SqlDataReader reader = command.ExecuteReader();
             {
                 while (reader.Read())
                 {
-                    Object[] columnas = new Object[reader.FieldCount];
+                    object[] columnas = new object[reader.FieldCount];
                     reader.GetValues(columnas);
-                    foreach (var atributo in columnas) 
+                    foreach (var atributo in columnas)
                     {
-                        Console.Write("{0}", atributo);
+                        Console.Write("3. {0}", atributo);
                     }
-                   
+                    Console.WriteLine(reader["name"].ToString());
                 }
-            }           
-            
+                if (reader != null)
+                {
+
+                    //Console.WriteLine(reader["id"].ToString());
+
+                }
+            }
+
             List<PC> pcs = new List<PC>() { };
             PC valencia = new PC(1, "valencia", "fujitsu", "valancia", "Miditower");
             pcs.Add(valencia);
@@ -129,11 +131,11 @@ INSERT INTO PC ( name,hostname)
             valencia.AddCpu(i7);
             aquarius.AddCpu(i5);
             talos.AddCpu(i3);
-            
             talos.AddCpu(new CPU(3, "Core i3-2300", "Intel"));
 
             var tes = from pc in pcs where pc.FormFactor == "Notebook" select pc;
-            ;
+            var mmu = from pc in pcs where pc.Model == "MWA" select reader;
+
             foreach (var details in tes)
             {
                 var hostname = details.Id.ToString();
@@ -142,25 +144,28 @@ INSERT INTO PC ( name,hostname)
             {
                 if (test.FormFactor.ToString() == "Notebook")
                 {
-                    System.Console.WriteLine($"Der PC {test.Name} ist ein Notebook");
+                    Console.WriteLine($"Der PC {test.Name} ist ein Notebook");
                 }
                 else if (test.FormFactor.ToString() == "Miditower")
                 {
-                    System.Console.WriteLine($"Der PC {test.Name} ist ein Miditower");
+                    Console.WriteLine($"Der PC {test.Name} ist ein Miditower");
                 }
             }
 
-            System.Console.ReadKey();
+            Console.ReadKey();
 
         }
-    
+
         private static string GetConnectionString()
         {
+
             return "server=VALENCIA\\SQLEXPRESS;Database=CMDB; Integrated Security=true;";
+
         }
-        private void GetData() 
+        private static void GetData()
         {
-            Console.WriteLine("Holle die Daten ");
+            Console.WriteLine("Holle die Daten");
+
         }
     }
 
