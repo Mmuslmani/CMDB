@@ -1,14 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Text;
-using Microsoft.SqlServer;
-using System;
+using System.Linq;
 
-namespace Test_CMDB
+namespace CMDB_COMPANY
 {
-    class PC
+    public class PC
     {
         public string Name { get; set; }
         public int Id { get; set; }
@@ -61,11 +58,10 @@ namespace Test_CMDB
     {
         static void Main(string[] args)
         {
-
             string connetingString = GetConnectionString();
             SqlConnection conn = new SqlConnection(connetingString);
             Console.WriteLine("1. State: {0}", conn.State);
-
+            GetData();
 
             if (conn != null)
             {
@@ -89,35 +85,12 @@ JOIN RAM ON PC.id = RAM.pc_id
 WHERE pc.hostname like 'MAC'
 ";
             string insert = @"
-SET IDENTITY_INSERT PC on;
-INSERT INTO PC ( name,hostname)
-     VALUES(@ID, 'MMS')
+--SET IDENTITY_INSERT PC on;
+INSERT INTO PC (person_id,name,hostname)
+     VALUES(@PersonId,@Name,@Hostname)
 ";
 
-            SqlCommand command = new SqlCommand(query, conn);
-            //conn.Open();
-            // command.Connection = conn;
-            //command.CommandText = insert;
-            SqlDataReader reader = command.ExecuteReader();
-            {
-                while (reader.Read())
-                {
-                    object[] columnas = new object[reader.FieldCount];
-                    reader.GetValues(columnas);
-                    foreach (var atributo in columnas)
-                    {
-                        Console.Write("3. {0}", atributo);
-                    }
-                    Console.WriteLine(reader["name"].ToString());
-                }
-                if (reader != null)
-                {
-
-                    //Console.WriteLine(reader["id"].ToString());
-
-                }
-            }
-
+            //LoadProcess(insert, conn);
             List<PC> pcs = new List<PC>() { };
             PC valencia = new PC(1, "valencia", "fujitsu", "valancia", "Miditower");
             pcs.Add(valencia);
@@ -134,7 +107,6 @@ INSERT INTO PC ( name,hostname)
             talos.AddCpu(new CPU(3, "Core i3-2300", "Intel"));
 
             var tes = from pc in pcs where pc.FormFactor == "Notebook" select pc;
-            var mmu = from pc in pcs where pc.Model == "MWA" select reader;
 
             foreach (var details in tes)
             {
@@ -150,13 +122,47 @@ INSERT INTO PC ( name,hostname)
                 {
                     Console.WriteLine($"Der PC {test.Name} ist ein Miditower");
                 }
+                var sqlQuery = $"INSERT INTO PC (name, hostname) VALUES ('{test.Name}','{test.Name}')";
+                SqlCommand command = new SqlCommand(insert, conn);
+                command.Parameters.AddWithValue("@Name",test.Name);
+                command.Parameters.AddWithValue("@Hostname", test.HostName);
+                command.Parameters.AddWithValue("@PersonId", test.Id);
+                command.ExecuteNonQuery();
             }
 
             Console.ReadKey();
 
         }
 
-        private static string GetConnectionString()
+        private static void LoadProcess(string query, SqlConnection conn)
+        {
+            SqlCommand command = new SqlCommand(query, conn);
+            //SqlQuery query1 = new SqlQuery(query,conn);
+            
+            SqlDataReader reader = command.ExecuteReader();
+            {
+                while (reader.Read())
+                {
+                    object[] columnas = new object[reader.FieldCount];
+                    reader.GetValues(columnas);
+                    foreach (var atributo in columnas)
+                    {
+                        Console.WriteLine($"Daten lesen {atributo}");
+                        Console.Write("3. {0}", atributo);
+                    }
+                    Console.WriteLine(reader["name"].ToString());
+                }
+                if (reader != null)
+                {
+                    Console.WriteLine("Koennte keine Daten auslesen ..!");
+                    //Console.WriteLine(reader["id"].ToString());
+
+                }
+
+            }
+        }
+
+        public static string GetConnectionString()
         {
 
             return "server=VALENCIA\\SQLEXPRESS;Database=CMDB; Integrated Security=true;";
